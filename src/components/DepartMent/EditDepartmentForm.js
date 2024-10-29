@@ -1,34 +1,43 @@
 import React, { useState, useEffect } from 'react';
-import { TextField, Button, Box } from '@mui/material';
+import { TextField, Button, Box, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 
 const EditDepartmentForm = ({ department, onSubmit, onClose }) => {
-  const [name, setName] = useState(department?.name || '');
+  const [selectedDepartment, setSelectedDepartment] = useState(department?.name || '');
   const [description, setDescription] = useState(department?.description || '');
 
   useEffect(() => {
-    setName(department?.name || '');
+    setSelectedDepartment(department?.name || '');
     setDescription(department?.description || '');
   }, [department]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (name && description) {
-      onSubmit({ name, description });
+    if (selectedDepartment && description) {
+      onSubmit({ name: selectedDepartment, description });
       onClose();
     }
   };
 
+  const handleDepartmentChange = (event) => {
+    setSelectedDepartment(event.target.value);
+  };
+
   return (
     <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2 }}>
-      <TextField
-        label="Name"
-        variant="outlined"
-        fullWidth
-        margin="normal"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        required
-      />
+      <FormControl fullWidth margin="normal" required>
+        <InputLabel id="department-select-label">Department</InputLabel>
+        <Select
+          labelId="department-select-label"
+          value={selectedDepartment}
+          onChange={handleDepartmentChange}
+        >
+          <MenuItem value="Engineering">Engineering</MenuItem>
+          <MenuItem value="Marketing">Marketing</MenuItem>
+          <MenuItem value="Sales">Sales</MenuItem>
+          <MenuItem value="Human Resources">Human Resources</MenuItem>
+          <MenuItem value="Finance">Finance</MenuItem>
+        </Select>
+      </FormControl>
 
       <TextField
         label="Description"

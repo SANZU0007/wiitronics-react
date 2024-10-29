@@ -1,24 +1,18 @@
 import React, { useState } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
-
 import {
   Box,
   Drawer,
   CssBaseline,
   AppBar as MuiAppBar,
   Toolbar,
-
   IconButton,
   List,
- 
- 
 } from '@mui/material';
-
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -66,45 +60,22 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   justifyContent: 'flex-end',
 }));
 
-export default function UserNavbar({}) {
+export default function UserNavbar() {
   const theme = useTheme();
   const navigate = useNavigate();
+  const location = useLocation();
   const [open, setOpen] = useState(false);
   const user = JSON.parse(localStorage.getItem('user')) || {};
 
   const handleDrawerToggle = () => setOpen((prevOpen) => !prevOpen);
-  
 
-  const Department = () => {
-    // Navigate to the admin panel
-    navigate('/Department'); // Change this path as needed
-  };
-   const Employeegrid = () => {
-    // Navigate to the admin panel
-    navigate('/'); // Change this path as needed
-  };
-
-
-  const Piechart = () => {
-    // Navigate to the admin panel
-    navigate('/Piechart'); // Change this path as needed
-  };
-
-  const  Barchart = () => {
-    // Navigate to the admin panel
-    navigate('/Barchart'); // Change this path as needed
-  };
- 
-
-  const  AttendancePage= () => {
-    // Navigate to the admin panel
-    navigate('/AttendancePage'); // Change this path as needed
-  };
- 
-
-  
-
-
+  const navItems = [
+    { label: 'Employee Grid', path: '/', onClick: () => navigate('/') },
+    { label: 'Barchart', path: '/Barchart', onClick: () => navigate('/Barchart') },
+    { label: 'Department', path: '/Department', onClick: () => navigate('/Department') },
+    { label: 'Piechart', path: '/Piechart', onClick: () => navigate('/Piechart') },
+    { label: 'AttendancePage', path: '/AttendancePage', onClick: () => navigate('/AttendancePage') },
+  ];
 
   return (
     <Box id="maintemplate" sx={{ display: 'flex', backgroundColor: "#1976d2" }}>
@@ -114,7 +85,6 @@ export default function UserNavbar({}) {
           <IconButton color="inherit" onClick={handleDrawerToggle} edge="start" sx={{ ...(open && { display: 'none' }) }}>
             <MenuIcon />
           </IconButton>
-       
         </Toolbar>
       </AppBar>
       <Drawer
@@ -138,41 +108,23 @@ export default function UserNavbar({}) {
           </IconButton>
         </DrawerHeader>
 
-      
-        <List style={{display:"flex",flexDirection:"column" ,textAlign:"start" ,alignItems:"flex-start" ,marginLeft:"20px"}}>
-     
-        <p style={{color:"white" ,}}
-        onClick={Employeegrid}
-       >Employee grid</p>
-
-
-       <p style={{color:"white" ,}}
-        onClick={Department}
-       >Department</p>
-        
-
-
-
-        <p style={{color:"white" ,}}
-        onClick={Barchart}
-       >Barchart</p>
-        
-
-
-
-
-        <p style={{color:"white" ,}}
-        onClick={Piechart}
-       >Piechart</p>
-         
-        
-
-         <p style={{color:"white" ,}}
-        onClick={AttendancePage}
-       >AttendancePage</p>
-         
-
-          
+        <List style={{ display: "flex", flexDirection: "column", textAlign: "start", alignItems: "flex-start", marginLeft: "20px" }}>
+          {navItems.map((item) => (
+            <p
+              key={item.path}
+              onClick={item.onClick}
+              style={{
+                color: "white",
+                padding: "10px",
+                width: "100%",
+                borderBottom: "1px solid white",
+                cursor: "pointer",
+                backgroundColor: location.pathname === item.path ? "#115293" : "inherit",
+              }}
+            >
+              {item.label}
+            </p>
+          ))}
         </List>
       </Drawer>
       <Main open={open} />
