@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import AllEmployeeData from './components/Employee/AllEmployeeData';
+import UserNavbar from './components/Navbar';
+import Department from './components/DepartMent/Department';
+import Piechart from './components/Chart/Piechart';
+import BarChartComponent from './components/Chart/BarChart';
+import AttendancePage from './components/Attendance/AttendancePage';
 
-function App() {
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div>
+        <UserNavbar />
+        <Routes>
+          <Route path="/" element={<AllEmployeeData />} />
+
+          <Route path="/Department" element={<Department/>} />
+          <Route path="/Piechart" element={<Piechart/>} />
+            <Route path="/AttendancePage" element={<AttendancePage/>} />
+
+          <Route path="/Barchart" element={<BarChartComponent/>} />
+        </Routes>
+      </div>
+    </Router>
   );
-}
+};
 
 export default App;
