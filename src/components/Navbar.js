@@ -72,8 +72,9 @@ export default function UserNavbar() {
   const navItems = [
     { label: 'Employee Grid', path: '/', onClick: () => navigate('/') },
     { label: 'Barchart', path: '/Barchart', onClick: () => navigate('/Barchart') },
-    { label: 'Department', path: '/Department', onClick: () => navigate('/Department') },
+   
     { label: 'Piechart', path: '/Piechart', onClick: () => navigate('/Piechart') },
+     { label: 'Department', path: '/Department', onClick: () => navigate('/Department') },
     { label: 'AttendancePage', path: '/AttendancePage', onClick: () => navigate('/AttendancePage') },
   ];
 
